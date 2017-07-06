@@ -152,8 +152,11 @@ public class FancyAlert {
                 double aspect = 16.0/9.0;
                 height = view.getHeight();
                 int containerHeight = (int) (container.getWidth() / aspect);
-                RelativeLayout.LayoutParams lp =new RelativeLayout.LayoutParams(container.getWidth(), containerHeight);
-                container.setLayoutParams(lp);
+                if (containerHeight < container.getHeight()) {
+                    RelativeLayout.LayoutParams lp =new RelativeLayout.LayoutParams(container.getWidth(), containerHeight);
+                    container.setLayoutParams(lp);
+                }
+
                 view.setTranslationY(height * -1);
                 view.animate().translationY(0).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(800);
                 return false;
