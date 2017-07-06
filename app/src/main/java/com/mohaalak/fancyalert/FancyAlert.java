@@ -150,7 +150,7 @@ public class FancyAlert {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 double aspect = 16.0/9.0;
                 height = (int) (view.getWidth() / aspect);
-                ViewGroup.LayoutParams lp =new ViewGroup.LayoutParams(view.getWidth(), height);
+                ViewGroup.MarginLayoutParams lp =new ViewGroup.MarginLayoutParams(view.getWidth(), height);
                 view.setLayoutParams(lp);
                 view.setTranslationY(height * -1);
                 view.animate().translationY(0).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(800);
@@ -160,6 +160,14 @@ public class FancyAlert {
         if (duration > 0) {
             handler.removeCallbacks(hideRunnable);
             handler.postDelayed(hideRunnable, duration);
+        } else {
+            view.setBackgroundColor(Color.parseColor("#00000036"));
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hide();
+                }
+            });
         }
     }
 
