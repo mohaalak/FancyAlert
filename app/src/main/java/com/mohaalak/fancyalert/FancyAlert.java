@@ -14,6 +14,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -147,7 +148,10 @@ public class FancyAlert {
             @Override
             public boolean onPreDraw() {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
-                height = view.getHeight();
+                double aspect = 16.0/9.0;
+                height = (int) (view.getWidth() / aspect);
+                ViewGroup.LayoutParams lp =new ViewGroup.LayoutParams(view.getWidth(), height);
+                view.setLayoutParams(lp);
                 view.setTranslationY(height * -1);
                 view.animate().translationY(0).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(800);
                 return false;
@@ -221,7 +225,7 @@ public class FancyAlert {
         private Typeface typeface;
         private View.OnClickListener onClickListener;
         private OnDismissListener onDismissListener;
-        private int mode = -1;
+        private int mode = FancyAlert.ERROR;
         private Drawable icon;
         private @ColorInt int color = -1;
         private int duration = -1;
@@ -280,8 +284,7 @@ public class FancyAlert {
 
         public FancyAlert build(Activity activity) {
             FancyAlert fancyAlert = new FancyAlert(activity);
-            if (mode != -1)
-                fancyAlert.setMode(mode);
+            fancyAlert.setMode(mode);
             if (color != -1)
                 fancyAlert.setBackgroundColor(color);
             if (message != null)
