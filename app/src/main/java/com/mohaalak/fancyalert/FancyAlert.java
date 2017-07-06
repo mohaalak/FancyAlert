@@ -36,6 +36,9 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class FancyAlert {
 
+    public static final  int ERROR = 0;
+    public static final  int WARNING = 1;
+    public static final  int SUCCESS = 2;
 
     //region Private Variables
     private OnDismissListener onDismissListener;
@@ -111,6 +114,27 @@ public class FancyAlert {
         onDismissListener = listener;
     }
 
+    private void setMode(int mode) {
+        Drawable drawable = null;
+        switch (mode) {
+            case SUCCESS:
+                setBackgroundColor(Color.parseColor("#27ae60"));
+                drawable = ContextCompat.getDrawable(activity.get(), R.drawable.success);
+                setIcon(drawable);
+                break;
+            case WARNING:
+                setBackgroundColor(Color.parseColor("#f39c12"));
+                drawable = ContextCompat.getDrawable(activity.get(), R.drawable.warning);
+                setIcon(drawable);
+                break;
+            default:
+                setBackgroundColor(Color.parseColor("#e74c3c"));
+                drawable = ContextCompat.getDrawable(activity.get(), R.drawable.error);
+                setIcon(drawable);
+                break;
+
+        }
+    }
     public void show() {
         if (activity.get() == null) {
             destroy();
@@ -189,87 +213,91 @@ public class FancyAlert {
     };
 
 
-    public class FancyAlertBuilder {
+    public static class FancyAlertBuilder {
 
-        public static final  int ERROR = 0;
-        public static final  int WARNING = 1;
-        public static final  int SUCCESS = 2;
 
-        private FancyAlert fancyAlert;
-
-        public FancyAlertBuilder(Activity activity) {
-            fancyAlert = new FancyAlert(activity);
-        }
+        private String message;
+        private String buttonText;
+        private Typeface typeface;
+        private View.OnClickListener onClickListener;
+        private OnDismissListener onDismissListener;
+        private int mode = -1;
+        private Drawable icon;
+        private @ColorInt int color = -1;
+        private int duration = -1;
 
         public FancyAlertBuilder setButton(String text, View.OnClickListener onClickListener) {
-            fancyAlert.setButton(text, onClickListener);
+            buttonText = text;
+            onClickListener = onClickListener;
             return this;
         }
 
         public FancyAlertBuilder setButtonText(String text) {
-            fancyAlert.setButtonText(text);
+            buttonText = text;
             return this;
         }
 
         public FancyAlertBuilder setButtonClickListener(View.OnClickListener onClickListener) {
-            fancyAlert.setButtonClickListener(onClickListener);
+            this.onClickListener = onClickListener;
             return this;
         }
 
         public FancyAlertBuilder setIcon(Drawable drawable) {
-            fancyAlert.setIcon(drawable);
+            icon = drawable;
             return this;
         }
 
         public FancyAlertBuilder setBackgroundColor(@ColorInt int color) {
-            fancyAlert.setBackgroundColor(color);
+            this.color = color;
             return this;
         }
 
         public FancyAlertBuilder setMessage(String s) {
-            fancyAlert.setText(s);
+            this.message = s;
             return this;
         }
 
         public FancyAlertBuilder setDuration(int duration) {
-            fancyAlert.setDuration(duration);
+            this.duration = duration;
             return this;
         }
 
         public FancyAlertBuilder setTypeface(Typeface tf) {
-            fancyAlert.setTextTypeFace(tf);
+            this.typeface = tf;
             return this;
         }
 
         public FancyAlertBuilder setOnDismissListener(OnDismissListener onDismissListener) {
-            fancyAlert.setOnDismissListener(onDismissListener);
+            this.onDismissListener = onDismissListener;
             return this;
         }
 
 
         public FancyAlertBuilder setMode(int mode) {
-            Drawable drawable = null;
-            switch (mode) {
-                case SUCCESS:
-                    fancyAlert.setBackgroundColor(Color.parseColor("#2ecc71"));
-                    drawable = ContextCompat.getDrawable(fancyAlert.getContext(), R.drawable.success);
-                    fancyAlert.setIcon(drawable);
-                    break;
-                case WARNING:
-                    fancyAlert.setBackgroundColor(Color.parseColor("#f39c12"));
-                    drawable = ContextCompat.getDrawable(fancyAlert.getContext(), R.drawable.warning);
-                    fancyAlert.setIcon(drawable);
-                    break;
-                default:
-                    fancyAlert.setBackgroundColor(Color.parseColor("#e74c3c"));
-                    drawable = ContextCompat.getDrawable(fancyAlert.getContext(), R.drawable.error);
-                    fancyAlert.setIcon(drawable);
-                    break;
-            }
+            this.mode = mode;
             return this;
         }
 
-        public FancyAlert build() {
+        public FancyAlert build(Activity activity) {
+            FancyAlert fancyAlert = new FancyAlert(activity);
+            if (mode != -1)
+                fancyAlert.setMode(mode);
+            if (color != -1)
+                fancyAlert.setBackgroundColor(color);
+            if (message != null)
+                fancyAlert.setText(message);
+            if (onClickListener != null)
+                fancyAlert.setButtonClickListener(onClickListener);
+            if (buttonText != null)
+                fancyAlert.setButtonText(buttonText);
+            if (typeface != null)
+                fancyAlert.setTextTypeFace(typeface);
+            if (icon != null)
+                fancyAlert.setIcon(icon);
+            if (duration != -1)
+                fancyAlert.setDuration(duration);
+            if (onDismissListener != null)
+                fancyAlert.setOnDismissListener(onDismissListener);
             return fancyAlert;
         }
 
