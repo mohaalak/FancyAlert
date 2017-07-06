@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -149,9 +150,10 @@ public class FancyAlert {
             public boolean onPreDraw() {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 double aspect = 16.0/9.0;
-                height = (int) (view.getWidth() / aspect);
-                ViewGroup.LayoutParams lp =new ViewGroup.LayoutParams(view.getWidth(), height);
-                view.setLayoutParams(lp);
+                height = view.getHeight();
+                int containerHeight = (int) (container.getWidth() / aspect);
+                RelativeLayout.LayoutParams lp =new RelativeLayout.LayoutParams(container.getWidth(), containerHeight);
+                container.setLayoutParams(lp);
                 view.setTranslationY(height * -1);
                 view.animate().translationY(0).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(800);
                 return false;
