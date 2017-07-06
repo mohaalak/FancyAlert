@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/alert_back"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingBottom="50dp"
+    android:minHeight="150dp"
+    android:id="@+id/container">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_margin="30dp"
+        app:srcCompat="@drawable/error" />
+    
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:fb_textSize="20sp"
+        app:fb_defaultColor="#00ffffff"
+        app:fb_radius="5dp"
+        app:fb_textFont="IRANSansMobile.ttf"
+        app:fb_borderColor="#fff"
+        app:fb_disabledBorderColor="#60ffffff"
+        app:fb_disabledColor="#00ffffff"
+        app:fb_borderWidth="1dp"
+        app:fb_focusColor="#91ffffff" />
+</LinearLayout>
