@@ -152,7 +152,7 @@ public class FancyAlert {
                 double aspect = 16.0/9.0;
                 height = view.getHeight();
                 int containerHeight = (int) (container.getWidth() / aspect);
-                if (containerHeight < container.getHeight()) {
+                if (containerHeight > container.getHeight()) {
                     RelativeLayout.LayoutParams lp =new RelativeLayout.LayoutParams(container.getWidth(), containerHeight);
                     container.setLayoutParams(lp);
                 }
@@ -245,7 +245,7 @@ public class FancyAlert {
 
         public FancyAlertBuilder setButton(String text, View.OnClickListener onClickListener) {
             buttonText = text;
-            onClickListener = onClickListener;
+            this.onClickListener = onClickListener;
             return this;
         }
 
